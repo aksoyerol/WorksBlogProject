@@ -25,7 +25,7 @@ namespace Works.BlogProject.DataAccess.Concrete.EntityFrameworkCore.Repositories
             return await context.Set<T>().Where(filter).ToListAsync();
         }
 
-        public async Task<List<T>> GetAllAsync<TKey>(Expression<Func<T, bool>> filter,Expression<Func<T,TKey>> keySelector)
+        public async Task<List<T>> GetAllAsync<TKey>(Expression<Func<T, bool>> filter, Expression<Func<T, TKey>> keySelector)
         {
             using var context = new BlogProjectContext();
             return await context.Set<T>().Where(filter).OrderByDescending(keySelector).ToListAsync();
@@ -64,5 +64,10 @@ namespace Works.BlogProject.DataAccess.Concrete.EntityFrameworkCore.Repositories
             await context.SaveChangesAsync();
         }
 
+        public async Task<T> GetByIdAsync(int id)
+        {
+            using var context = new BlogProjectContext();
+            return await context.Set<T>().FindAsync(id);
+        }
     }
 }

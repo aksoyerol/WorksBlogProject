@@ -11,7 +11,7 @@ namespace Works.BlogProject.Business.Concrete
 {
     public class GenericManager<T> : IGenericService<T> where T : class, ITable, new()
     {
-        IGenericDal<T> _genericDal;
+        private readonly IGenericDal<T> _genericDal;
         public GenericManager(IGenericDal<T> genericDal)
         {
             _genericDal = genericDal;
@@ -21,25 +21,25 @@ namespace Works.BlogProject.Business.Concrete
             return await _genericDal.GetAllAsync();
         }
 
-        public async Task<List<T>> GetAllAsync(Expression<Func<T, bool>> filter)
-        {
-            return await _genericDal.GetAllAsync(filter);
-        }
+        //public async Task<List<T>> GetAllAsync(Expression<Func<T, bool>> filter)
+        //{
+        //    return await _genericDal.GetAllAsync(filter);
+        //}
 
-        public async Task<List<T>> GetAllAsync<TKey>(Expression<Func<T, bool>> filter, Expression<Func<T, TKey>> keySelector)
-        {
-            return await _genericDal.GetAllAsync(filter, keySelector);
-        }
+        //public async Task<List<T>> GetAllAsync<TKey>(Expression<Func<T, bool>> filter, Expression<Func<T, TKey>> keySelector)
+        //{
+        //    return await _genericDal.GetAllAsync(filter, keySelector);
+        //}
 
-        public async Task<List<T>> GetAllAsync<TKey>(Expression<Func<T, TKey>> keySelector)
-        {
-            return await _genericDal.GetAllAsync(keySelector);
-        }
+        //public async Task<List<T>> GetAllAsync<TKey>(Expression<Func<T, TKey>> keySelector)
+        //{
+        //    return await _genericDal.GetAllAsync(keySelector);
+        //}
 
-        public async Task<T> GetAsync(Expression<Func<T, bool>> filter)
-        {
-            return await _genericDal.GetAsync(filter);
-        }
+        //public async Task<T> GetAsync(Expression<Func<T, bool>> filter)
+        //{
+        //    return await _genericDal.GetAsync(filter);
+        //}
 
         public async Task InsertAsync(T entity)
         {
@@ -55,5 +55,9 @@ namespace Works.BlogProject.Business.Concrete
             await _genericDal.DeleteAsync(entity);
         }
 
+        public async Task<T> GetByIdAsync(int id)
+        {
+            return await _genericDal.GetByIdAsync(id);
+        }
     }
 }
