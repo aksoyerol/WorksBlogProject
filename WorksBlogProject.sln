@@ -3,11 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30204.135
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Works.BlogProject.Entities", "Works.BlogProject.Entities\Works.BlogProject.Entities.csproj", "{5155B094-26E5-4D9F-8FC6-36BF04E1550F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Works.BlogProject.Entities", "Works.BlogProject.Entities\Works.BlogProject.Entities.csproj", "{5155B094-26E5-4D9F-8FC6-36BF04E1550F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Works.BlogProject.DataAccess", "Works.BlogProject.DataAccess\Works.BlogProject.DataAccess.csproj", "{6F665A83-0825-43BE-9D4C-1FE278C623DA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Works.BlogProject.DataAccess", "Works.BlogProject.DataAccess\Works.BlogProject.DataAccess.csproj", "{6F665A83-0825-43BE-9D4C-1FE278C623DA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Works.BlogProject.Business", "Works.BlogProject.Business\Works.BlogProject.Business.csproj", "{FF507991-4CD8-4BD4-A5B2-CD9E1FB8A291}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Works.BlogProject.Business", "Works.BlogProject.Business\Works.BlogProject.Business.csproj", "{FF507991-4CD8-4BD4-A5B2-CD9E1FB8A291}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Works.BlogProject.WebApi", "Works.BlogProject.WebApi\Works.BlogProject.WebApi.csproj", "{09061EDC-9535-43A2-B621-5AF713BD3284}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Works.BlogProject.Dto", "Works.BlogProject.Dto\Works.BlogProject.Dto.csproj", "{1C5A8728-1154-49AD-A55A-1EABDBCD43CB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +31,14 @@ Global
 		{FF507991-4CD8-4BD4-A5B2-CD9E1FB8A291}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF507991-4CD8-4BD4-A5B2-CD9E1FB8A291}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FF507991-4CD8-4BD4-A5B2-CD9E1FB8A291}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09061EDC-9535-43A2-B621-5AF713BD3284}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09061EDC-9535-43A2-B621-5AF713BD3284}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09061EDC-9535-43A2-B621-5AF713BD3284}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09061EDC-9535-43A2-B621-5AF713BD3284}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C5A8728-1154-49AD-A55A-1EABDBCD43CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C5A8728-1154-49AD-A55A-1EABDBCD43CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C5A8728-1154-49AD-A55A-1EABDBCD43CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C5A8728-1154-49AD-A55A-1EABDBCD43CB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

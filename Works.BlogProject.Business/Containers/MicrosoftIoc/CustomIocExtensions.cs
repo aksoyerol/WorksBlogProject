@@ -15,6 +15,17 @@ namespace Works.BlogProject.Business.Containers.MicrosoftIoc
         {
             services.AddScoped(typeof(IGenericDal<>), typeof(EfGenericRepository<>));
             services.AddScoped(typeof(IGenericService<>), typeof(GenericManager<>));
+
+            services.AddScoped<IBlogDal, EfBlogRepository>();
+            services.AddScoped<IAppUserDal, EfAppUserRepository>();
+            services.AddScoped<ICategoryDal, EfCategoryRepository>();
+            services.AddScoped<ICommentDal, EfCommentRepository>();
+
+            services.AddScoped<IBlogService, BlogManager>();
+            services.AddScoped<IAppUserService, AppUserManager>();
+            services.AddScoped<ICategoryService, CategoryManager>();
+            services.AddScoped<ICommentService, CommentManager>();
+
         }
     }
 }
