@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -8,18 +9,19 @@ using Microsoft.AspNetCore.Mvc;
 using Works.BlogProject.Business.Interfaces;
 using Works.BlogProject.Dto.DTOs.BlogDtos;
 using Works.BlogProject.Entities.Concrete;
+using Works.BlogProject.WebApi.Enums;
 using Works.BlogProject.WebApi.Models;
 
 namespace Works.BlogProject.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BlogsController : ControllerBase
+    public class BlogsController : BaseController
     {
-        
+
         private readonly IBlogService _blogService;
         private readonly IMapper _mapper;
-        public BlogsController(IBlogService blogService,IMapper mapper)
+        public BlogsController(IBlogService blogService, IMapper mapper)
         {
             _mapper = mapper;
             _blogService = blogService;
@@ -38,20 +40,48 @@ namespace Works.BlogProject.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(BlogAddModel blogAddModel)
+        public async Task<IActionResult> Create([FromForm] BlogAddModel blogAddModel)
         {
-            await _blogService.InsertAsync(_mapper.Map<Blog>(blogAddModel));
-            return Created("", blogAddModel);
+
+            var uploadModel = await UploadFormFileAsync(blogAddModel.FormFile, "image/jpeg", "blog");
+
+            if (uploadModel.UploadState == UploadState.Success)
+            {
+                blogAddModel.ImagePath = uploadModel.ImageName;
+                await _blogService.InsertAsync(_mapper.Map<Blog>(blogAddModel));
+                return Created("", blogAddModel);
+            }
+            else if (uploadModel.UploadState == UploadState.NotExists)
+            {
+                await _blogService.InsertAsync(_mapper.Map<Blog>(blogAddModel));
+                return Created("", blogAddModel);
+            }
+            else return BadRequest(uploadModel.ErrorMessage);
+
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id,BlogUpdateModel blogUpdateModel)
+        public async Task<IActionResult> Update(int id, [FromForm] BlogUpdateModel blogUpdateModel)
         {
             if (id != blogUpdateModel.Id)
                 return BadRequest();
 
-            await _blogService.UpdateAsync(_mapper.Map<Blog>(blogUpdateModel));
-            return NoContent();
+            var uploadModel = await UploadFormFileAsync(blogUpdateModel.FormFile, "image/jpeg", "blog");
+
+            if (uploadModel.UploadState == UploadState.Success)
+            {
+                blogUpdateModel.ImagePath = uploadModel.ImageName;
+                await _blogService.UpdateAsync(_mapper.Map<Blog>(blogUpdateModel));
+                return NoContent();
+            }
+            else if (uploadModel.UploadState == UploadState.NotExists)
+            {
+                var updatedBlog = await _blogService.GetByIdAsync(blogUpdateModel.Id);
+                blogUpdateModel.ImagePath = updatedBlog.ImagePath;
+                await _blogService.UpdateAsync(_mapper.Map<Blog>(blogUpdateModel));
+                return NoContent();
+            }
+            else return BadRequest(uploadModel.ErrorMessage);
         }
 
         [HttpDelete("{id}")]
