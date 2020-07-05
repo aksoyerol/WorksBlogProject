@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -10,7 +12,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Works.BlogProject.Business.Containers.MicrosoftIoc;
+using Works.BlogProject.Business.StringInfo.JwtInfo;
 
 namespace Works.BlogProject.WebApi
 {
@@ -26,6 +30,20 @@ namespace Works.BlogProject.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
+            {
+                opt.RequireHttpsMetadata = false;
+                opt.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidIssuer = JwtInfo.Issuer,
+                    ValidAudience = JwtInfo.Audience,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JwtInfo.SecurityKey)),
+                    ValidateLifetime = true,
+                    ValidateAudience = true,
+                    ValidateIssuer = true,
+                    ClockSkew = TimeSpan.Zero
+                };
+            });
             services.AddAutoMapper(typeof(Startup));
             services.AddDependencies();
             services.AddControllers().AddNewtonsoftJson(opt =>
@@ -44,7 +62,7 @@ namespace Works.BlogProject.WebApi
 
             app.UseStaticFiles();
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

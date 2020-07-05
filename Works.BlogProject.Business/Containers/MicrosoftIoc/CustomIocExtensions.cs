@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using Works.BlogProject.Business.Concrete;
 using Works.BlogProject.Business.Interfaces;
+using Works.BlogProject.Business.Tools.JwtTool;
 using Works.BlogProject.DataAccess.Concrete.EntityFrameworkCore.Repositories;
 using Works.BlogProject.DataAccess.Interfaces;
 
@@ -25,6 +26,8 @@ namespace Works.BlogProject.Business.Containers.MicrosoftIoc
             services.AddScoped<IAppUserService, AppUserManager>();
             services.AddScoped<ICategoryService, CategoryManager>();
             services.AddScoped<ICommentService, CommentManager>();
+
+            services.AddScoped<IJwtService, JwtManager>();
 
         }
     }
