@@ -13,8 +13,10 @@ namespace Works.BlogProject.Business.Concrete
     {
         private readonly IGenericDal<Blog> _genericDal;
         private readonly IGenericDal<CategoryBlog> _categoryBlogDal;
-        public BlogManager(IGenericDal<Blog> genericDal, IGenericDal<CategoryBlog> categoryBlogDal) : base(genericDal)
+        private readonly IBlogDal _blogDal;
+        public BlogManager(IGenericDal<Blog> genericDal, IGenericDal<CategoryBlog> categoryBlogDal, IBlogDal blogDal) : base(genericDal)
         {
+            _blogDal = blogDal;
             _categoryBlogDal = categoryBlogDal;
             _genericDal = genericDal;
         }
@@ -44,5 +46,10 @@ namespace Works.BlogProject.Business.Concrete
             return await _genericDal.GetAllAsync(x => x.PostedTime);
         }
 
+        public async Task<List<Blog>> GetAllByCategoryIdAsync(int id)
+        {
+            return await _blogDal.GetAllByCategoryIdAsync(id);
+
+        }
     }
 }

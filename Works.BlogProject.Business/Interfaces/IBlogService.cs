@@ -12,5 +12,6 @@ namespace Works.BlogProject.Business.Interfaces
         Task<List<Blog>> GetAllSortedPostedTimeAsync();
         Task AddToCategoryAsync(CategoryBlogDto categoryBlogDto);
         Task RemoveFromCategoryAsync(CategoryBlogDto categoryBlogDto);
+        Task<List<Blog>> GetAllByCategoryIdAsync(int id);
     }
 }

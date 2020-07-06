@@ -37,6 +37,7 @@ namespace Works.BlogProject.WebApi.Controllers
         }
 
         [HttpGet("{id}")]
+        [ServiceFilter(typeof(ValidId<Blog>))]
         public async Task<IActionResult> GetById(int id)
         {
             return Ok(_mapper.Map<BlogListDto>(await _blogService.GetByIdAsync(id)));
@@ -67,6 +68,7 @@ namespace Works.BlogProject.WebApi.Controllers
 
         [HttpPut("{id}")]
         [Authorize]
+        [ServiceFilter(typeof(ValidId<Blog>))]
         [ValidModel]
         public async Task<IActionResult> Update(int id, [FromForm] BlogUpdateModel blogUpdateModel)
         {
@@ -93,6 +95,7 @@ namespace Works.BlogProject.WebApi.Controllers
 
         [HttpDelete("{id}")]
         [Authorize]
+        [ServiceFilter(typeof(ValidId<Blog>))]
         public async Task<IActionResult> Delete(int id)
         {
             await _blogService.DeleteAsync(new Blog { Id = id });
@@ -112,6 +115,13 @@ namespace Works.BlogProject.WebApi.Controllers
         {
             await _blogService.RemoveFromCategoryAsync(categoryBlogDto);
             return NoContent();
+        }
+
+        [HttpGet("[action]/{id}")]
+        [ServiceFilter(typeof(ValidId<Blog>))]
+        public async Task<IActionResult> GetAllByCategoryId(int id)
+        {
+            return Ok(await _blogService.GetAllByCategoryIdAsync(id));
         }
     }
 }

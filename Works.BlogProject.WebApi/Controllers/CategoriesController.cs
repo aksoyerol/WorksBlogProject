@@ -32,6 +32,8 @@ namespace Works.BlogProject.WebApi.Controllers
         }
 
         [HttpGet("{id}")]
+        [ServiceFilter(typeof(ValidId<Category>))]
+
         public async Task<IActionResult> GetById(int id)
         {
             return Ok(_mapper.Map<CategoryListDto>(await _categoryService.GetByIdAsync(id)));
@@ -48,6 +50,7 @@ namespace Works.BlogProject.WebApi.Controllers
 
         [HttpPut("{id}")]
         [Authorize]
+        [ServiceFilter(typeof(ValidId<Category>))]
         [ValidModel]
         public async Task<IActionResult> Update(int id, CategoryUpdateDto categoryUpdateDto)
         {
@@ -59,6 +62,7 @@ namespace Works.BlogProject.WebApi.Controllers
 
         [HttpDelete("{id}")]
         [Authorize]
+        [ServiceFilter(typeof(ValidId<Category>))]
         public async Task<IActionResult> Delete(int id)
         {
             await _categoryService.DeleteAsync(new Category { Id = id });
