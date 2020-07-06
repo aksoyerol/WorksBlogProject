@@ -4,11 +4,14 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Works.BlogProject.Business.Interfaces;
 using Works.BlogProject.Dto.DTOs.BlogDtos;
+using Works.BlogProject.Dto.DTOs.CategoryBlogDtos;
 using Works.BlogProject.Entities.Concrete;
+using Works.BlogProject.WebApi.CustomFilters;
 using Works.BlogProject.WebApi.Enums;
 using Works.BlogProject.WebApi.Models;
 
@@ -40,6 +43,8 @@ namespace Works.BlogProject.WebApi.Controllers
         }
 
         [HttpPost]
+        [Authorize]
+        [ValidModel]
         public async Task<IActionResult> Create([FromForm] BlogAddModel blogAddModel)
         {
 
@@ -61,6 +66,8 @@ namespace Works.BlogProject.WebApi.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize]
+        [ValidModel]
         public async Task<IActionResult> Update(int id, [FromForm] BlogUpdateModel blogUpdateModel)
         {
             if (id != blogUpdateModel.Id)
@@ -85,9 +92,25 @@ namespace Works.BlogProject.WebApi.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<IActionResult> Delete(int id)
         {
             await _blogService.DeleteAsync(new Blog { Id = id });
+            return NoContent();
+        }
+
+        [HttpPost("[action]")]
+        public async Task<IActionResult> AddToCategory(CategoryBlogDto categoryBlogDto)
+        {
+            await _blogService.AddToCategoryAsync(categoryBlogDto);
+            return Created("", categoryBlogDto);
+        }
+
+        [HttpDelete("[action]")]
+        [ValidModel]
+        public async Task<IActionResult> RemoveFromCategory(CategoryBlogDto categoryBlogDto)
+        {
+            await _blogService.RemoveFromCategoryAsync(categoryBlogDto);
             return NoContent();
         }
     }

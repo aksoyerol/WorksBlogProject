@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Works.BlogProject.DataAccess\Works.BlogProject.DataAccess.csproj" />
+    <ProjectReference Include="..\Works.BlogProject.Dto\Works.BlogProject.Dto.csproj" />
     <ProjectReference Include="..\Works.BlogProject.Entities\Works.BlogProject.Entities.csproj" />
   </ItemGroup>
 

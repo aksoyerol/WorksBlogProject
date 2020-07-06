@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Works.BlogProject.Business.Interfaces;
 using Works.BlogProject.Dto.DTOs.CategoryDtos;
 using Works.BlogProject.Entities.Concrete;
+using Works.BlogProject.WebApi.CustomFilters;
 
 namespace Works.BlogProject.WebApi.Controllers
 {
@@ -36,6 +38,8 @@ namespace Works.BlogProject.WebApi.Controllers
         }
 
         [HttpPost]
+        [Authorize]
+        [ValidModel]
         public async Task<IActionResult> Create(CategoryAddDto categoryAddDto)
         {
             await _categoryService.InsertAsync(_mapper.Map<Category>(categoryAddDto));
@@ -43,6 +47,8 @@ namespace Works.BlogProject.WebApi.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize]
+        [ValidModel]
         public async Task<IActionResult> Update(int id, CategoryUpdateDto categoryUpdateDto)
         {
             if (id != categoryUpdateDto.Id)
@@ -52,10 +58,29 @@ namespace Works.BlogProject.WebApi.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<IActionResult> Delete(int id)
         {
             await _categoryService.DeleteAsync(new Category { Id = id });
             return NoContent();
+        }
+
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetWithBlogsCount()
+        {
+            var categories = await _categoryService.GetAllWithCategoryBlogsAsync();
+            List<CategoryWithBlogsCountDto> categoryWithBlogsCountDto = new List<CategoryWithBlogsCountDto>();
+
+            foreach (var category in categories)
+            {
+                CategoryWithBlogsCountDto dto = new CategoryWithBlogsCountDto
+                {
+                    Category = category,
+                    BlogsCount = category.CategoryBlogs.Count
+                };
+                categoryWithBlogsCountDto.Add(dto);
+            }
+            return Ok(categoryWithBlogsCountDto);
         }
     }
 }
