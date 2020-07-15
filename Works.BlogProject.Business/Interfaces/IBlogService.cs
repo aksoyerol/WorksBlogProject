@@ -13,5 +13,6 @@ namespace Works.BlogProject.Business.Interfaces
         Task AddToCategoryAsync(CategoryBlogDto categoryBlogDto);
         Task RemoveFromCategoryAsync(CategoryBlogDto categoryBlogDto);
         Task<List<Blog>> GetAllByCategoryIdAsync(int id);
+        Task<List<Category>> GetCategoriesWithBlogAsync(int blogId);
     }
 }

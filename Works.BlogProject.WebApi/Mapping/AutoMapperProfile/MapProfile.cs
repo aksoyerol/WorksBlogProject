@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Works.BlogProject.Dto.DTOs.BlogDtos;
 using Works.BlogProject.Dto.DTOs.CategoryDtos;
+using Works.BlogProject.Dto.DTOs.CommentDtos;
 using Works.BlogProject.Entities.Concrete;
 using Works.BlogProject.WebApi.Models;
 
@@ -27,6 +28,9 @@ namespace Works.BlogProject.WebApi.Mapping.AutoMapperProfile
             CreateMap<CategoryListDto, Category>();
             CreateMap<Category, CategoryUpdateDto>();
             CreateMap<CategoryUpdateDto, Category>();
+
+            CreateMap<Comment, CommentListDto>();
+            CreateMap<CommentListDto, Comment>();
         }
     }
 }

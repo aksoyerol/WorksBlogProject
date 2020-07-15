@@ -23,7 +23,7 @@ namespace Works.BlogProject.WebApi.Controllers
             _jwtService = jwtService;
         }
 
-        [HttpPost]
+        [HttpPost("[action]")]
         public async Task<IActionResult> SignIn(AppUserLoginDto appUserLoginDto)
         {
             var user = await _appUserService.CheckUserAsync(appUserLoginDto);
@@ -41,7 +41,7 @@ namespace Works.BlogProject.WebApi.Controllers
         {
             var user = await _appUserService.FindByNameAsync(User.Identity.Name);
 
-            return Ok(new AppUserDto { Name = user.Name, LastName = user.LastName, UserName = user.UserName });
+            return Ok(new AppUserDto { Id = user.Id, Name = user.Name, LastName = user.LastName, UserName = user.UserName });
 
         }
     }

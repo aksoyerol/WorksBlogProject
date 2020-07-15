@@ -51,5 +51,10 @@ namespace Works.BlogProject.Business.Concrete
             return await _blogDal.GetAllByCategoryIdAsync(id);
 
         }
+
+        public async Task<List<Category>> GetCategoriesWithBlogAsync(int blogId)
+        {
+            return await _blogDal.GetCategoriesWithBlogAsync(blogId);
+        }
     }
 }

@@ -36,5 +36,19 @@ namespace Works.BlogProject.DataAccess.Concrete.EntityFrameworkCore.Repositories
                 ShortDescription = x.blog.ShortDescription
             }).ToListAsync();
         }
+
+        public async Task<List<Category>> GetCategoriesWithBlogAsync(int blogId)
+        {
+            using var context = new BlogProjectContext();
+            return await context.Categories.Join(context.CategoryBlogs, c => c.Id, cb => cb.CategoryId, (category, categoryBlog) => new
+            {
+                category = category,
+                categoryBlog = categoryBlog
+            }).Where(x => x.categoryBlog.BlogId == blogId).Select(x => new Category
+            {
+                Id = x.category.Id,
+                Name = x.category.Name
+            }).ToListAsync();
+        }
     }
 }
