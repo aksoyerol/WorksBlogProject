@@ -14,5 +14,6 @@ namespace Works.BlogProject.Business.Interfaces
         Task RemoveFromCategoryAsync(CategoryBlogDto categoryBlogDto);
         Task<List<Blog>> GetAllByCategoryIdAsync(int id);
         Task<List<Category>> GetCategoriesWithBlogAsync(int blogId);
+        Task<List<Blog>> SearchAsync(string searchString);
     }
 }

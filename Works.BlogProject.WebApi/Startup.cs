@@ -57,14 +57,16 @@ namespace Works.BlogProject.WebApi
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env,IAppUserService appUserService)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IAppUserService appUserService)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+            //if (env.IsDevelopment())
+            //{
+            //    app.UseDeveloperExceptionPage();
+            //}
 
-            DataInitilazier.SeedData(appUserService).Wait();
+            app.UseExceptionHandler("/Error");
+
+            //DataInitilazier.SeedData(appUserService).Wait();
             app.UseStaticFiles();
             app.UseRouting();
             app.UseAuthentication();

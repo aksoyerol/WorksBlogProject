@@ -6,12 +6,14 @@ using System.Text;
 using Works.BlogProject.Business.Concrete;
 using Works.BlogProject.Business.Interfaces;
 using Works.BlogProject.Business.Tools.JwtTool;
+using Works.BlogProject.Business.Tools.LogTool;
 using Works.BlogProject.Business.ValidationRules.FluentValidation;
 using Works.BlogProject.DataAccess.Concrete.EntityFrameworkCore.Repositories;
 using Works.BlogProject.DataAccess.Interfaces;
 using Works.BlogProject.Dto.DTOs.AppUserDtos;
 using Works.BlogProject.Dto.DTOs.CategoryBlogDtos;
 using Works.BlogProject.Dto.DTOs.CategoryDtos;
+using Works.BlogProject.Dto.DTOs.CommentDtos;
 
 namespace Works.BlogProject.Business.Containers.MicrosoftIoc
 {
@@ -19,6 +21,8 @@ namespace Works.BlogProject.Business.Containers.MicrosoftIoc
     {
         public static void AddDependencies(this IServiceCollection services)
         {
+            services.AddScoped<ICustomLogger, NLogAdapter>();
+
             services.AddScoped(typeof(IGenericDal<>), typeof(EfGenericRepository<>));
             services.AddScoped(typeof(IGenericService<>), typeof(GenericManager<>));
 
@@ -38,6 +42,7 @@ namespace Works.BlogProject.Business.Containers.MicrosoftIoc
             services.AddTransient<IValidator<CategoryAddDto>, CategoryAddDtoValidator>();
             services.AddTransient<IValidator<CategoryBlogDto>, CategoryBlogDtoValidator>();
             services.AddTransient<IValidator<CategoryUpdateDto>, CategoryUpdateDtoValidator>();
+            services.AddTransient<IValidator<CommentAddDto>, CommentAddDtoValidator>();
 
         }
     }

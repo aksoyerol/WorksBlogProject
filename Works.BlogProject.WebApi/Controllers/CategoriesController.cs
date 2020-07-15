@@ -65,7 +65,7 @@ namespace Works.BlogProject.WebApi.Controllers
         [ServiceFilter(typeof(ValidId<Category>))]
         public async Task<IActionResult> Delete(int id)
         {
-            await _categoryService.DeleteAsync(new Category { Id = id });
+            await _categoryService.DeleteAsync(await _categoryService.GetByIdAsync(id));
             return NoContent();
         }
 
